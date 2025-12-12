@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-image: url('../public/background.png');
+    color: #1a3e70 !important;
+}
+
+header {
+    height: 120px;
+    border-radius: 0 0 20px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+footer {
+    height: 120px;
+    border-radius: 20px 20px 0 0;
+    margin-bottom: 20px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+footer img,
+header img {
+    height: 130px;
+    margin: 0;
+}
+
+.bgColorFooterHeaderNav {
+    background-color: #C1D4EF
+}
+
+.formContainer {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+}
+
+h1 {
+    font-size: 0.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    width: 100%;
+}
+
+.formContainer label {
+    margin-top: 1.5rem;
+}
+
+.formContainer input {
+    width: 100%;
+    padding: 0.5rem;
+
+}
+
+.formContainer a {
+    text-decoration: none;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+    color: #1a3e70 ;
+}
+
+.formContainer a:hover {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.formContainer button {
+    width: 100%;
+    background-color: azure;
+    color: #307BBF;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bolder;
+    border: #307BBF solid 2px;
+}
+
+.formContainer button:hover {
+    transition: 0.3s;
+    background: linear-gradient(135deg, #307BBF, #87bee9);
+    color: white;
+    border: #307abf00 solid 2px;
+}
+
+.errorMessage {
+    color: red;
+    margin: auto;
+    text-align: center;
+    font-weight: bold;
+}
