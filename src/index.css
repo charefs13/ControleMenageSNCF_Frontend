@@ -1,106 +1,121 @@
 body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-image: url('../public/background.png');
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    background-image: url('../public/background.png') !important;
     color: #1a3e70 !important;
 }
 
 header {
-    height: 120px;
-    border-radius: 0 0 20px 20px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: start;
-    align-items: center;
+    height: 120px !important;
+    border-radius: 0 0 20px 20px !important;
+    margin-bottom: 20px !important;
+    display: flex !important;
+    justify-content: start !important;
+    align-items: center !important;
 }
 
 footer {
-    height: 120px;
-    border-radius: 20px 20px 0 0;
-    margin-bottom: 20px;
-    margin-bottom: 0;
-    display: flex;
-    justify-content: end;
-    align-items: center;
+    height: 120px !important;
+    border-radius: 20px 20px 0 0 !important;
+    margin-bottom: 0 !important;
+    display: flex !important;
+    justify-content: end !important;
+    align-items: center !important;
 }
 
 footer img,
 header img {
-    height: 130px;
-    margin: 0;
+    height: 130px !important;
+    margin: 0 !important;
 }
 
 .bgColorFooterHeaderNav {
-    background-color: #C1D4EF
+    background-color: #C1D4EF !important;
 }
 
 .formContainer {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 1rem;
-    width: 100%;
-    max-width: 500px;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
+    background-color: white !important;
+    padding: 2rem !important;
+    border-radius: 1rem !important;
+    width: 100% !important;
+    max-width: 500px !important;
+    margin: 50px auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: start !important;
+    align-items: start !important;
+}
+.formContainer form {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: start !important;
+    align-items: start !important;
 }
 
 h1 {
-    font-size: 0.5rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    width: 100%;
+    font-size: 25px !important;
+    font-weight: bold !important;
+    margin: 5px 0;
+    text-align: center !important;
+    width: 100% !important;
 }
 
-.formContainer label {
-    margin-top: 1.5rem;
-}
-
-.formContainer input {
-    width: 100%;
-    padding: 0.5rem;
+.formContainer form label {
+    margin: 5px 0;
 
 }
 
-.formContainer a {
-    text-decoration: none;
-    font-size: 0.75rem;
-    margin-bottom: 1rem;
-    color: #1a3e70 ;
+.formContainer form input {
+    width: 100% !important;
+    padding: 0.5rem !important;
+    margin: 0 0 15px 0 !important;
 }
 
-.formContainer a:hover {
-    color: blue;
-    text-decoration: underline;
-    cursor: pointer;
+.formContainer form a {
+    text-decoration: none !important;
+    font-size: 0.75rem !important;
+    margin: 5px 0;
+    color: #1a3e70 !important;
 }
 
-.formContainer button {
-    width: 100%;
-    background-color: azure;
-    color: #307BBF;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-weight: bolder;
-    border: #307BBF solid 2px;
+.formContainer form a:hover {
+    color: blue !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
 }
 
-.formContainer button:hover {
-    transition: 0.3s;
-    background: linear-gradient(135deg, #307BBF, #87bee9);
-    color: white;
-    border: #307abf00 solid 2px;
+.formContainer form button {
+    width: 100% !important;
+    background-color: azure !important;
+    color: #307BBF !important;
+    padding: 0.75rem !important;
+    border: none !important;
+    border-radius: 0.5rem !important;
+    cursor: pointer !important;
+    font-weight: bolder !important;
+    border: #307BBF solid 2px !important;
+    margin-top: 10px !important;
+}
+
+.formContainer form button:hover {
+    transition: 0.3s !important;
+    background: linear-gradient(135deg, #307BBF, #87bee9) !important;
+    color: white !important;
+    border: #307abf00 solid 2px !important;
 }
 
 .errorMessage {
-    color: red;
-    margin: auto;
-    text-align: center;
-    font-weight: bold;
+    color: red !important;
+    margin: auto !important;
+    text-align: center !important;
+    font-weight: bold !important;
+}
+
+successMessage{
+    color: rgb(0, 161, 0) !important;
+    margin: auto !important;
+    text-align: center !important;
+    font-weight: bold !important;
 }

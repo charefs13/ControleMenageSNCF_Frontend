@@ -9,7 +9,7 @@ export default function PageLayout({ children }: PageLayoutProps) {
     return (
         <div className="layout flex flex-col min-h-screen">
             <header className="bgColorFooterHeaderNav p-4 flex justify-start">
-                <img src="" alt="Logo Sncf Voyageur blanc" />
+               <a href="/"> <img src="" alt="Logo Sncf Voyageur blanc" /></a>
             </header>
             <main className="flex-1 flex items-center justify-center p-4">
                 {children}

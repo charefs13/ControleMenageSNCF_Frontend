@@ -10,18 +10,18 @@ export default function Login() {
   const [password, setPassword] = useState(''); // Stocke le mot de passe
   const [error, setError] = useState('');     // Message d'erreur
   const [loading, setLoading] = useState(false); // Indique si une requête est en cours
-  
+
 
   // --- Fonction appelée au clic sur "Se connecter" ---
-  const handleLogin = async () => {
-
+ const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
 
     if (!cp || !password) {
       setError('Veuillez remplir tous les champs');
       return;
     }
 
-     // Regex CP : 7 chiffres suivis d'une lettre majuscule
+    // Regex CP : 7 chiffres suivis d'une lettre majuscule
     const cpRegex = /^\d{7}[A-Z]$/;
     if (!cpRegex.test(cp)) {
       setError("Le CP doit contenir 7 chiffres suivis d’une lettre majuscule");
@@ -33,8 +33,8 @@ export default function Login() {
     setError('');
 
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
-            const res = await fetch(`${API_URL}/auth/login`, {
+      const API_URL = import.meta.env.VITE_API_URL;
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cp, mdp: password }),
@@ -64,43 +64,44 @@ export default function Login() {
 
         {/* Affiche un message d'erreur */}
         {error && <p className="errorMessage">{error}</p>}
+        <form>
+          {/* Champ CP */}
+          <label htmlFor="cp">CP</label>
+          <input
+            id="cp"
+            type="text"
+            placeholder="0123456A"
+            value={cp}
+            onChange={(e) => setCp(e.target.value)}
+            className="border rounded"
+          />
 
-        {/* Champ CP */}
-        <label htmlFor="cp" className="mb-1 font-medium">CP</label>
-        <input
-          id="cp"
-          type="text"
-          placeholder="0123456A"
-          value={cp}
-          onChange={(e) => setCp(e.target.value)}
-          className="border rounded"
-        />
+          {/* Champ mot de passe */}
+          <label htmlFor="password" className="mb-1 font-medium">Mot de passe</label>
+          <input
+            id="password"
+            type="password"
+            placeholder="Mot de passe"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="border rounded"
+          />
 
-        {/* Champ mot de passe */}
-        <label htmlFor="password" className="mb-1 font-medium">Mot de passe</label>
-        <input
-          id="password"
-          type="password"
-          placeholder="Mot de passe"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 mb-2 border rounded"
-        />
+          {/* Lien "mot de passe oublié" */}
+          <div className="flex justify-end mb-4">
+            <a href='./reset-password'>
+              Mot de passe oublié ?
+            </a>
+          </div>
 
-        {/* Lien "mot de passe oublié" */}
-        <div className="flex justify-end mb-4">
-          <a href='./reset-password.tsx'>
-            Mot de passe oublié ?
-          </a>
-        </div>
-
-        {/* Bouton de connexion */}
-        <button
-          onClick={handleLogin}
-          disabled={loading}
-        >
-          {loading ? 'Connexion...' : 'Se connecter'}
-        </button>
+          {/* Bouton de connexion */}
+          <button
+            onClick={handleLogin}
+            disabled={loading}
+          >
+            {loading ? 'Connexion...' : 'Se connecter'}
+          </button>
+        </form>
       </div>
     </PageLayout>
   );

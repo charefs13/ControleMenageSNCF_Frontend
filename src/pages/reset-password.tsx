@@ -12,7 +12,8 @@ export default function ResetPassword() {
     const [loading, setLoading] = useState(false);     // Indique si une requête est en cours
 
     // --- Fonction appelée au submit du formulaire ---
-    const handleResetPassword = async () => {
+    const handleResetPassword = async (e: React.FormEvent) => {
+        e.preventDefault();
         setError('');
         setSuccessMessage('');
 
@@ -31,7 +32,7 @@ export default function ResetPassword() {
         setLoading(true);
 
         try {
-            const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+            const API_URL = import.meta.env.VITE_API_URL;
             const res = await fetch(`${API_URL}/auth/reset-password`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -43,7 +44,7 @@ export default function ResetPassword() {
             if (!res.ok) {
                 setError(data.message || 'Erreur lors de la réinitialisation du mot de passe');
             } else {
-                setSuccessMessage('Un email de réinitialisation a été envoyé si ce compte existe.');
+                setSuccessMessage('Un lien de réinitialisation a été envoyé. Ce lien est valide pendant 2 heures.');
                 setEmail(''); // Optionnel : vider le champ email après succès
             }
         } catch {
@@ -57,7 +58,7 @@ export default function ResetPassword() {
     return (
         <PageLayout>
             <div className="formContainer">
-                <h1>Réinitialiser votre mot de passe</h1>
+                <h1 className="fs-6 fw-bold mb-3 text-center w-100">Réinitialiser votre mot de passe</h1>
 
                 {/* Affiche un message d'erreur */}
                 {error && <p className="errorMessage">{error}</p>}
@@ -68,12 +69,13 @@ export default function ResetPassword() {
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
-                        handleResetPassword();
+                        handleResetPassword(e);
                     }}
                 >
                     {/* Champ email */}
-                    <label htmlFor="email" className="mb-1 font-medium">Email</label>
+                    <label htmlFor="email">Email</label>
                     <input
+
                         id="email"
                         type="email"
                         placeholder="prenom.nom@sncf.fr"
