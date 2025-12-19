@@ -2,32 +2,212 @@ body {
     margin: 0 !important;
     padding: 0 !important;
     box-sizing: border-box !important;
-    background-image: url('../public/background.png') !important;
+    background-image: url('/background.png') !important;
     color: #1a3e70 !important;
 }
 
 header {
-    height: 120px !important;
-    border-radius: 0 0 20px 20px !important;
-    margin-bottom: 20px !important;
-    display: flex !important;
-    justify-content: start !important;
-    align-items: center !important;
+    max-height: 120px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    border-radius: 0 0 20px 20px;
+    z-index: 100;
+}
+
+.logoSncfVoyageurs {
+    height: 95px !important;
+    margin: 0 !important;
+}
+
+aside {
+    transition: 0.3s ease;
+    width: 70px;
+    height: 90vh;
+    background-color: #EEF3FC;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+aside:hover {
+    width: 300px;
+    transition: 0.3s ease;
+
+}
+
+.bigNav {
+    display: none;
+}
+
+aside:hover .bigNav {
+    display: contents;
+}
+
+aside nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 140px;
+    text-align: start;
+    padding-left: 0;
+    margin-left: 0;
+
+}
+
+aside nav a {
+    text-decoration: none;
+    color: #1a3e70;
+    margin: 15px 0;
+}
+
+nav ul {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 0;
+    font-weight: bold;
+    text-align: start;
+    padding: 5px;
+
+}
+
+nav li {
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 0;
+}
+
+.navIcon,
+.logout {
+    height: 30px;
+    margin: 0 10px;
+}
+
+
+.selected {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: #C1D4EF;
+    border-radius: 10px;
+    background-color: #307BBF;
+    text-align: start;
+    justify-content: center;
+    padding: 5px O;
+    gap: 3px;
+}
+
+aside:hover .selected {
+    justify-content: start;
+}
+
+.selected .bigNav {
+    color: white;
+    margin-top: 5px;
+}
+
+.selected .white a{
+color: white;
+}
+
+.habilitationUl {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.habilitationUl div {
+    margin-left: 35%;
+    font-size: smaller;
+    width: 100%;
+}
+
+.none {
+    display: none;
+}
+
+.habilitationUl:hover .none {
+    display: block;
+    transition: 0.3s;
+}
+
+.habilitationUl div li {
+    width: 75%;
+    padding: 5px;
+}
+
+.habilitationUl div li:hover {
+    /* background-color: #CDE4F8; */
+    border-radius: 5px;
+    text-align: center;
+    color: #1a3e70 !important;
+}
+
+.selectedItem{
+    background-color: #CDE4F8;
+    border-radius: 10px;
+    color: #1a3e70 !important;
+    text-align: center;
+}
+
+.logoutContainer {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+aside:hover .logout {
+    display: none;
 }
 
 footer {
-    height: 120px !important;
-    border-radius: 20px 20px 0 0 !important;
-    margin-bottom: 0 !important;
-    display: flex !important;
-    justify-content: end !important;
-    align-items: center !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 120px;
+
+    display: flex;
+    align-items: center;
+
+    border-radius: 20px 20px 0 0;
+    background-color: #C1D4EF;
+
+    padding: 0 2rem;
+    z-index: 100;
 }
 
-footer img,
-header img {
-    height: 130px !important;
-    margin: 0 !important;
+/* Texte centré */
+.footerText {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: auto;
+    color: #1a3e70;
+    font-weight: lighter;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Logo à droite */
+footer img {
+    margin-left: auto;
+    height: 130px;
 }
 
 .bgColorFooterHeaderNav {
@@ -40,13 +220,28 @@ header img {
     border-radius: 1rem !important;
     width: 100% !important;
     max-width: 500px !important;
-    margin: 50px auto !important;
+    margin: 150px auto !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: start !important;
     align-items: start !important;
 }
-.formContainer form {
+
+.addAuthorizationContainer {
+    background-color: white !important;
+    padding: 2rem !important;
+    border-radius: 1rem !important;
+    width: 100% !important;
+    max-width: 600px !important;
+    margin: 150px auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: start !important;
+    align-items: start !important;
+}
+
+.formContainer form,
+.addAuthorizationContainer form {
     width: 100% !important;
     display: flex !important;
     flex-direction: column !important;
@@ -54,29 +249,32 @@ header img {
     align-items: start !important;
 }
 
-h1 {
+h1,
+h2 {
     font-size: 25px !important;
     font-weight: bold !important;
-    margin: 5px 0;
+    margin-bottom: 15px !important;
     text-align: center !important;
     width: 100% !important;
 }
 
-.formContainer form label {
-    margin: 5px 0;
-
+.formContainer form label .addAuthorizationContainer form label {
+    margin-top: 20px;
 }
 
-.formContainer form input {
+.formContainer form input,
+.formContainer form select,
+.addAuthorizationContainer form input,
+.addAuthorizationContainer form select {
     width: 100% !important;
     padding: 0.5rem !important;
-    margin: 0 0 15px 0 !important;
+    margin: 0 !important;
+    margin-bottom: 15px !important;
 }
 
 .formContainer form a {
     text-decoration: none !important;
-    font-size: 0.75rem !important;
-    margin: 5px 0;
+    font-size: 0.65rem !important;
     color: #1a3e70 !important;
 }
 
@@ -86,7 +284,8 @@ h1 {
     cursor: pointer !important;
 }
 
-.formContainer form button {
+.formContainer form button,
+.addAuthorizationContainer form button {
     width: 100% !important;
     background-color: azure !important;
     color: #307BBF !important;
@@ -96,10 +295,11 @@ h1 {
     cursor: pointer !important;
     font-weight: bolder !important;
     border: #307BBF solid 2px !important;
-    margin-top: 10px !important;
+    margin-top: 20px !important;
 }
 
-.formContainer form button:hover {
+.formContainer form button:hover,
+.addAuthorizationContainer form button:hover {
     transition: 0.3s !important;
     background: linear-gradient(135deg, #307BBF, #87bee9) !important;
     color: white !important;
@@ -113,9 +313,128 @@ h1 {
     font-weight: bold !important;
 }
 
-successMessage{
+.successMessage {
     color: rgb(0, 161, 0) !important;
     margin: auto !important;
     text-align: center !important;
     font-weight: bold !important;
+}
+
+/*------------------ Modal CSS ------------------*/
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    /* Effet blur */
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.modalContainer {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1001;
+    max-width: 600px;
+    width: 90%;
+}
+
+.modalContent {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.btnContainer {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    margin-top: 10px;
+}
+
+.btnContainer .accepte {
+    background: white;
+    border: #34e88e solid 2px;
+    color: #009a4d;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    width: 40%;
+    font-weight: bold;
+}
+
+.btnContainer .accepte:hover {
+    background: linear-gradient(135deg, #34e88e, #CDE4F8) !important;
+    color: #fff;
+    border: none;
+}
+
+.btnContainer .decline {
+    background-color: white;
+    border: red solid 2px;
+    color: red;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    width: 40%;
+    font-weight: bold;
+}
+
+
+.btnContainer .decline:hover {
+    background-color: red;
+    border: none;
+    color: white;
+
+}
+
+.updateContainer {
+    background-color: white !important;
+    padding: 2rem !important;
+    border-radius: 1rem !important;
+    width: 100% !important;
+    max-width: 600px !important;
+    margin: 150px auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: start !important;
+    align-items: start !important;
+}
+
+.updateContainer form label {
+    margin-top: 20px;
+}
+
+.updateContainer form input,
+.updateContainer form select {
+    width: 100% !important;
+    padding: 0.5rem !important;
+    margin: 0 !important;
+    margin-bottom: 5px !important;
+}
+
+.searchContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    padding: 10px 5px;
+    border: rgba(0, 0, 0, 0.111) solid 1px;
+    border-radius: 10px;
+}
+
+.searchContainer img{
+    width: 7%;
+}
+.searchBar{
+    width: 100%;
 }

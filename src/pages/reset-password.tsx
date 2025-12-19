@@ -58,7 +58,7 @@ export default function ResetPassword() {
     return (
         <PageLayout>
             <div className="formContainer">
-                <h1 className="fs-6 fw-bold mb-3 text-center w-100">Réinitialiser votre mot de passe</h1>
+                <h1 className="">Réinitialiser votre mot de passe</h1>
 
                 {/* Affiche un message d'erreur */}
                 {error && <p className="errorMessage">{error}</p>}

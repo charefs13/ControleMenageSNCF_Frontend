@@ -80,7 +80,7 @@ export default function UpdatePassword() {
   return (
     <PageLayout>
       <div className="formContainer">
-        <h1 className="fs-6 fw-bold mb-3 text-center w-100">Modifier votre mot de passe</h1>
+        <h1 className="">Modifier votre mot de passe</h1>
 
         {error && <p className="errorMessage">{error}</p>}
         {successMessage && <p className="successMessage">{successMessage}</p>}
