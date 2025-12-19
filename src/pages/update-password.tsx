@@ -53,9 +53,9 @@ export default function UpdatePassword() {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, // => le backend décode le token et récupère payload.sub
+          'Authorization': `Bearer ${token}`, 
         },
-        body: JSON.stringify({ mdp: password }), // backend attend "mdp"
+        body: JSON.stringify({ newPassword: password }),
       });
 
       const data = await res.json().catch(() => ({}));
