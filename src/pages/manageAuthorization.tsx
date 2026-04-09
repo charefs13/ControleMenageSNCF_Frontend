@@ -20,7 +20,6 @@ export default function ManageAuthorization() {
     const [showSaveModal, setShowSaveModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-    // --- Recherche par CP ---
     const handleSearch = async () => {
         if (!searchCP) return;
 
@@ -32,7 +31,7 @@ export default function ManageAuthorization() {
 
             const res = await fetch(`${API_URL}/agent/${searchCP}`, {
                 method: 'GET',
-                credentials: 'include', // envoie le cookie
+                credentials: 'include',
             });
 
             const data = await res.json();
@@ -49,7 +48,6 @@ export default function ManageAuthorization() {
         setLoading(false);
     };
 
-    // --- Enregistrement ---
     const handleSave = async () => {
         if (!agent) return;
 
@@ -82,7 +80,6 @@ export default function ManageAuthorization() {
         setLoading(false);
     };
 
-    // --- Suppression ---
     const handleDelete = async () => {
         if (!agent) return;
 
@@ -124,88 +121,126 @@ export default function ManageAuthorization() {
     };
 
     return (
-        <PageLayout>
-            <div className="updateContainer">
-                <h1>Gérer une habilitation</h1>
+        <PageLayout requireAuth requiredRole="ADMIN">
+            <section className="dashboardGrid pageSection">
+                <div className="dashboardHero">
+                    <div className="pageIntro">
+                        <p className="pageEyebrow">Administration</p>
+                        <h1>Gérer une habilitation</h1>
+                        <p className="pageSubtitle">
+                            Recherchez un collaborateur par CP puis modifiez son profil ou supprimez son accès.
+                        </p>
+                    </div>
 
-                {success && <p className="successMessage">{success}</p>}
-                {error && <p className="errorMessage">{error}</p>}
-
-                <div className='searchContainer'>
-                    <img src="../../public/search.png" alt="logo Rechercher" />
-                    <input
-                        type="text"
-                        placeholder="Entrer un CP pour gérer son habilitation"
-                        value={searchCP}
-                        onChange={(e) => { setSearchCP(e.target.value); setError(''); setSuccess(''); }}
-                        onKeyDown={handleKeyPress}
-                        className="border-0 rounded searchBar"
-                    />
+                    <div className="infoGrid">
+                        <div className="infoCard">
+                            <strong>Recherche par CP</strong>
+                            La gestion d&apos;une habilitation commence par la recherche d&apos;un utilisateur
+                            existant à partir de son CP.
+                        </div>
+                        <div className="infoCard">
+                            <strong>Modification du profil</strong>
+                            Vous pouvez mettre à jour le nom, le prénom, l&apos;email professionnel
+                            et le rôle attribué à l&apos;utilisateur.
+                        </div>
+                        <div className="infoCard">
+                            <strong>Suppression de l&apos;accès</strong>
+                            La suppression retire définitivement l&apos;utilisateur de l&apos;application.
+                            Cette action doit être confirmée avant exécution.
+                        </div>
+                    </div>
                 </div>
 
-                {agent && (
+                <div className="updateContainer">
+                    {success && <p className="successMessage">{success}</p>}
+                    {error && <p className="errorMessage">{error}</p>}
 
-                    <form className="mt-4">
-
-                        <label htmlFor="cp">CP</label>
-                        <input
-                            id="cp"
-                            type="text"
-                            disabled
-                            value={agent.cp}
-                            onChange={(e) => { setAgent({ ...agent, cp: e.target.value }); setSuccess(''); }}
-                            className="border rounded"
-                        />
-
-                        <label htmlFor="nom">Nom</label>
-                        <input
-                            id="nom"
-                            type="text"
-                            value={agent.nom}
-                            onChange={(e) => { setAgent({ ...agent, nom: e.target.value }); setSuccess(''); }}
-                            className="border rounded"
-                        />
-
-                        <label htmlFor="prenom">Prénom</label>
-                        <input
-                            id="prenom"
-                            type="text"
-                            value={agent.prenom}
-                            onChange={(e) => { setAgent({ ...agent, prenom: e.target.value }); setSuccess(''); }}
-                            className="border rounded"
-                        />
-
-                        <label htmlFor="email">Email</label>
-                        <input
-                            id="email"
-                            type="email"
-                            value={agent.email}
-                            onChange={(e) => { setAgent({ ...agent, email: e.target.value }); setSuccess(''); }}
-                            className="border rounded"
-                        />
-
-
-                        <label htmlFor="role">Rôle</label>
-                        <select
-                            id="role"
-                            value={agent.role}
-                            onChange={(e) => { setAgent({ ...agent, role: e.target.value as 'UTILISATEUR' | 'ADMIN' }); setSuccess(''); }}
-                            className="border rounded"
-                        >
-                            <option value="UTILISATEUR">Utilisateur</option>
-                            <option value="ADMIN">Administrateur</option>
-                        </select>
-
-                        <div className="btnContainer">
-                            <button type="button" className="accepte" onClick={() => setShowSaveModal(true)}>
-                                Enregistrer
-                            </button>
-                            <button type="button" className="decline" onClick={() => setShowDeleteModal(true)}>
-                                Supprimer
+                    <div className="searchPanel">
+                        <div className="searchContainer">
+                            <span className="searchIconWrapper" aria-hidden="true">
+                                <img src="/search.png" alt="" />
+                            </span>
+                            <input
+                                type="text"
+                                placeholder="Entrer un CP pour gérer son habilitation"
+                                value={searchCP}
+                                onChange={(e) => {
+                                    setSearchCP(e.target.value.toUpperCase());
+                                    setError('');
+                                    setSuccess('');
+                                }}
+                                onKeyDown={handleKeyPress}
+                                className="searchBar"
+                            />
+                            <button
+                                type="button"
+                                className="secondaryButton"
+                                onClick={handleSearch}
+                                disabled={loading}
+                            >
+                                {loading ? 'Recherche...' : 'Rechercher'}
                             </button>
                         </div>
-                    </form>
-                )}
+                    </div>
+
+                    {agent && (
+                        <form>
+
+                            <label htmlFor="cp">CP</label>
+                            <input
+                                id="cp"
+                                type="text"
+                                disabled
+                                value={agent.cp}
+                                onChange={(e) => { setAgent({ ...agent, cp: e.target.value }); setSuccess(''); }}
+                            />
+
+                            <label htmlFor="nom">Nom</label>
+                            <input
+                                id="nom"
+                                type="text"
+                                value={agent.nom}
+                                onChange={(e) => { setAgent({ ...agent, nom: e.target.value }); setSuccess(''); }}
+                            />
+
+                            <label htmlFor="prenom">Prénom</label>
+                            <input
+                                id="prenom"
+                                type="text"
+                                value={agent.prenom}
+                                onChange={(e) => { setAgent({ ...agent, prenom: e.target.value }); setSuccess(''); }}
+                            />
+
+                            <label htmlFor="email">Email</label>
+                            <input
+                                id="email"
+                                type="email"
+                                value={agent.email}
+                                onChange={(e) => { setAgent({ ...agent, email: e.target.value }); setSuccess(''); }}
+                            />
+
+
+                            <label htmlFor="role">Rôle</label>
+                            <select
+                                id="role"
+                                value={agent.role}
+                                onChange={(e) => { setAgent({ ...agent, role: e.target.value as 'UTILISATEUR' | 'ADMIN' }); setSuccess(''); }}
+                            >
+                                <option value="UTILISATEUR">Utilisateur</option>
+                                <option value="ADMIN">Administrateur</option>
+                            </select>
+
+                            <div className="btnContainer">
+                                <button type="button" className="accepte" onClick={() => setShowSaveModal(true)}>
+                                    Enregistrer
+                                </button>
+                                <button type="button" className="decline" onClick={() => setShowDeleteModal(true)}>
+                                    Supprimer
+                                </button>
+                            </div>
+                        </form>
+                    )}
+                </div>
 
                 {showSaveModal && <div className="modalOverlay"></div>}
                 {showSaveModal && (
@@ -234,7 +269,7 @@ export default function ManageAuthorization() {
                         </div>
                     </div>
                 )}
-            </div>
+            </section>
         </PageLayout>
     );
 }

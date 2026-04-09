@@ -1,73 +1,120 @@
-# React + TypeScript + Vite
+# Frontend ControleMenageSNCF
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interface React + Vite de l'application interne SNCF de controle de nettoyage.
 
-Currently, two official plugins are available:
+## Perimetre
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Le frontend couvre :
 
-## React Compiler
+- la connexion utilisateur
+- l'acceptation des conditions d'utilisation
+- l'acces a la Power Apps de controle
+- la navigation selon le role utilisateur
+- les ecrans d'administration des habilitations
+- l'acces administrateur au rapport Power BI
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Stack technique
 
-## Expanding the ESLint configuration
+- React 19
+- React Router
+- Vite
+- TypeScript
+- CSS global maison dans `src/index.css`
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Structure utile
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+src/
+  layouts/
+    PageLayout.tsx
+  pages/
+    login.tsx
+    reset-password.tsx
+    update-password.tsx
+    mainPage.tsx
+    statistics.tsx
+    addAuthorization.tsx
+    manageAuthorization.tsx
+  App.tsx
+  index.css
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Routes
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `/login`
+- `/reset-password`
+- `/update-password`
+- `/mainPage`
+- `/statistics` : admin uniquement
+- `/addAuthorization` : admin uniquement
+- `/manageAuthorization` : admin uniquement
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Configuration
+
+Fichier attendu :
+
+- `.env`
+
+Exemple :
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+Pour un test sur telephone, remplacer `localhost` par l'IP locale du Mac.
+
+## Installation
+
+```bash
+npm install
+```
+
+## Lancement
+
+### Sur le poste local
+
+```bash
+npm run dev
+```
+
+Application disponible sur :
+
+```text
+http://localhost:5173/login
+```
+
+### Sur le reseau local
+
+```bash
+npm run dev -- --host 0.0.0.0
+```
+
+Puis ouvrir depuis un autre appareil :
+
+```text
+http://IP_DU_MAC:5173/login
+```
+
+## Scripts
+
+```bash
+npm run dev
+npm run build
+npm run lint
+```
+
+## Particularites UX
+
+- le layout centralise maintenant le controle d'acces des pages protegees
+- le menu lateral adapte les entrees visibles selon le role
+- Power Apps et Power BI gardent toujours un bouton d'ouverture externe
+- hors `localhost`, l'application affiche un fallback propre si l'embed Microsoft refuse l'iframe
+
+## Validation
+
+Derniere verification effectuee :
+
+```bash
+npm run lint
+npm run build
 ```

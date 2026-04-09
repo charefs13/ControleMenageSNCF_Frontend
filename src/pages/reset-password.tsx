@@ -1,17 +1,16 @@
 // reset-password.tsx
 
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import PageLayout from '../layouts/PageLayout'; // Layout réutilisable avec header/footer
-import '../index.css';  // Import du fichier CSS global (Tailwind, Bootstrap, etc.)
+import PageLayout from '../layouts/PageLayout';
+import '../index.css';
 
 export default function ResetPassword() {
-    // --- États du composant ---
-    const [email, setEmail] = useState('');             // Stocke l'email
-    const [error, setError] = useState('');            // Message d'erreur
-    const [successMessage, setSuccessMessage] = useState(''); // Message succès
-    const [loading, setLoading] = useState(false);     // Indique si une requête est en cours
+    const [email, setEmail] = useState('');
+    const [error, setError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    // --- Fonction appelée au submit du formulaire ---
     const handleResetPassword = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
@@ -22,7 +21,6 @@ export default function ResetPassword() {
             return;
         }
 
-        // Regex email SNCF
         const emailRegex = /^[A-Za-z0-9._%+-]+@sncf\.fr$/;
         if (!emailRegex.test(email)) {
             setError("Veuillez entrer une adresse email professionnelle terminant par @sncf.fr");
@@ -44,8 +42,8 @@ export default function ResetPassword() {
             if (!res.ok) {
                 setError(data.message || 'Erreur lors de la réinitialisation du mot de passe');
             } else {
-                setSuccessMessage('Un lien de réinitialisation a été envoyé. Ce lien est valide pendant 2 heures.');
-                setEmail(''); // Optionnel : vider le champ email après succès
+                setSuccessMessage('Si l\'utilisateur existe, un email de réinitialisation a été envoyé. Ce lien est valable 2 heures.');
+                setEmail('');
             }
         } catch {
             setError('Erreur réseau');
@@ -54,45 +52,42 @@ export default function ResetPassword() {
         }
     };
 
-    // --- Interface utilisateur ---
     return (
         <PageLayout>
             <div className="formContainer">
-                <h1 className="">Réinitialiser votre mot de passe</h1>
+                <div className="pageIntro">
+                    <p className="pageEyebrow">Assistance compte</p>
+                    <h1>Réinitialiser votre mot de passe</h1>
+                    <p className="pageSubtitle">
+                        Saisissez votre adresse professionnelle pour recevoir un lien de réinitialisation.
+                    </p>
+                </div>
 
-                {/* Affiche un message d'erreur */}
                 {error && <p className="errorMessage">{error}</p>}
-
-                {/* Affiche un message de succès */}
                 {successMessage && <p className="successMessage">{successMessage}</p>}
-
-                <form
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        handleResetPassword(e);
-                    }}
-                >
-                    {/* Champ email */}
+                <form onSubmit={handleResetPassword}>
                     <label htmlFor="email">Email</label>
                     <input
-
                         id="email"
                         type="email"
                         placeholder="prenom.nom@sncf.fr"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="border rounded"
+                        autoComplete="email"
                     />
 
-                    {/* Bouton d'envoi */}
                     <button
                         type="submit"
-                        onClick={handleResetPassword}
                         disabled={loading}
+                        className="primaryButton"
                     >
                         {loading ? 'Envoie...' : 'Envoyer'}
                     </button>
                 </form>
+
+                <Link to="/login" className="helperLink">
+                    Retour à la connexion
+                </Link>
             </div>
         </PageLayout>
     );

@@ -1,7 +1,7 @@
 // update-password.tsx
 
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // si tu utilises react-router
+import { Link, useNavigate } from 'react-router-dom';
 import PageLayout from '../layouts/PageLayout';
 import '../index.css';
 
@@ -12,15 +12,13 @@ export default function UpdatePassword() {
   const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Récupère params depuis l'URL : cp et token (token provient du lien envoyé par mail)
   const params = new URLSearchParams(window.location.search);
-  const cpUrl = params.get('cp')
-  const token = params.get('token')
+  const cpUrl = params.get('cp') ?? '';
+  const token = params.get('token');
 
-  const navigate = useNavigate(); // pour rediriger après succès (si tu utilises react-router)
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Si pas de token, on affiche une erreur immédiate (l'utilisateur doit réouvrir le lien email)
     if (!token) {
       setError('Lien invalide ou expiré. Merci de relancer la procédure de réinitialisation.');
     }
@@ -53,7 +51,7 @@ export default function UpdatePassword() {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ newPassword: password }),
       });
@@ -64,13 +62,11 @@ export default function UpdatePassword() {
         setError(data.message || 'Erreur lors de la modification du mot de passe');
       } else {
         setSuccessMessage('Votre mot de passe a été mis à jour avec succès.');
-        // Optionnel : nettoyage / redirection après un court délai
         setTimeout(() => {
-          // redirige vers la page de connexion
-          navigate('/');
+          navigate('/login');
         }, 1800);
       }
-    } catch (err) {
+    } catch {
       setError('Erreur réseau');
     } finally {
       setLoading(false);
@@ -80,44 +76,52 @@ export default function UpdatePassword() {
   return (
     <PageLayout>
       <div className="formContainer">
-        <h1 className="">Modifier votre mot de passe</h1>
+        <div className="pageIntro">
+          <p className="pageEyebrow">Sécurité</p>
+          <h1>Modifier votre mot de passe</h1>
+          <p className="pageSubtitle">
+            Choisissez un nouveau mot de passe pour finaliser la réinitialisation de votre compte.
+          </p>
+        </div>
 
         {error && <p className="errorMessage">{error}</p>}
         {successMessage && <p className="successMessage">{successMessage}</p>}
 
         <form onSubmit={handleUpdatePassword}>
-          {/* Champ CP affiché mais non modifiable */}
           <label htmlFor="cp">CP</label>
           <input
             id="cp"
             type="text"
             value={cpUrl}
             disabled
-            className="border rounded bg-gray-100"
           />
 
-          <label htmlFor="password" className="mb-1 font-medium">Nouveau mot de passe</label>
+          <label htmlFor="password">Nouveau mot de passe</label>
           <input
             id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border rounded"
+            autoComplete="new-password"
           />
 
-          <label htmlFor="confirmPassword" className="mb-1 font-medium">Confirmer le mot de passe</label>
+          <label htmlFor="confirmPassword">Confirmer le mot de passe</label>
           <input
             id="confirmPassword"
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="border rounded"
+            autoComplete="new-password"
           />
 
-          <button type="submit" disabled={loading}>
+          <button type="submit" disabled={loading} className="primaryButton">
             {loading ? 'Enregistrement...' : 'Enregistrer'}
           </button>
         </form>
+
+        <Link to="/login" className="helperLink">
+          Retour à la connexion
+        </Link>
       </div>
     </PageLayout>
   );

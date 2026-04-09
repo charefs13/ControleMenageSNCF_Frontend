@@ -1,21 +1,19 @@
 // src/pages/Login.tsx
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PageLayout from '../layouts/PageLayout';
 import '../index.css';
 
 export default function Login() {
   const navigate = useNavigate();
 
-  // États pour le formulaire
   const [cp, setCp] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
 
-  // Fonction de connexion
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -40,7 +38,7 @@ export default function Login() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cp, mdp: password }),
-        credentials: 'include', // ⚠️ Ajouté pour que le cookie soit accepté si backend renvoie Set-Cookie
+        credentials: 'include',
       });
 
       const data = await res.json();
@@ -61,7 +59,6 @@ export default function Login() {
     setLoading(false);
   };
 
-  // Acceptation des conditions
   const handleAcceptTerms = async () => {
     try {
       const API_URL = import.meta.env.VITE_API_URL;
@@ -70,7 +67,7 @@ export default function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include', // ⚠️ pour envoyer le cookie automatiquement
+        credentials: 'include',
       });
 
       const data = await res.json();
@@ -87,7 +84,6 @@ export default function Login() {
     }
   };
 
-  // Refus des conditions
   const handleDeclineTerms = () => {
     setShowTermsModal(false);
     setError('Vous devez accepter les conditions pour accéder à l’application.');
@@ -96,39 +92,45 @@ export default function Login() {
   return (
     <PageLayout>
       <div className="formContainer">
-        <h1>Connexion</h1>
+        <div className="pageIntro">
+          <p className="pageEyebrow">Accès sécurisé</p>
+          <h1>Connexion</h1>
+          <p className="pageSubtitle">
+            Connectez-vous pour accéder au contrôle de conformité et aux actions d'habilitation.
+          </p>
+        </div>
+
         {error && <p className="errorMessage">{error}</p>}
 
-        <form>
+        <form onSubmit={handleLogin}>
           <label htmlFor="cp">CP</label>
           <input
             id="cp"
             type="text"
             placeholder="0123456A"
             value={cp}
-            onChange={(e) => setCp(e.target.value)}
-            className="border rounded"
+            onChange={(e) => setCp(e.target.value.toUpperCase())}
+            autoComplete="username"
           />
 
-          <label htmlFor="password" className="mb-1 font-medium">Mot de passe</label>
+          <label htmlFor="password">Mot de passe</label>
           <input
             id="password"
             type="password"
             placeholder="Mot de passe"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border rounded"
+            autoComplete="current-password"
           />
 
-          <div className="">
-            <a href="./reset-password">Mot de passe oublié ?</a>
-          </div>
+          <Link to="/reset-password" className="helperLink">
+            Mot de passe oublié ?
+          </Link>
 
           <button
             type="submit"
-            onClick={handleLogin}
             disabled={loading}
-            className="px-4 py-2 bg-blue-600 text-white rounded"
+            className="primaryButton"
           >
             {loading ? 'Connexion...' : 'Se connecter'}
           </button>
